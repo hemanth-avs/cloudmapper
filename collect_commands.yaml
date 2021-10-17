@@ -192,6 +192,8 @@
 - Service: ec2
   Request: describe-network-interfaces
 - Service: ec2
+  Request: describe-nat-gateways
+- Service: ec2
   Request: describe-vpc-peering-connections
 - Service: directconnect
   Request: describe-connections

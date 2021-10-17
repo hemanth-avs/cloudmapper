@@ -25,6 +25,9 @@
 - name: SNS topics
   query: .Topics|length
   source: sns-list-topics
+- name: NAT Gateway
+  query: .NatGateways|length
+  source: ec2-describe-nat-gateways
 - name: SQS queues
   query: .QueueUrls|length
   source: sqs-list-queues
