@@ -262,7 +262,7 @@ def parse_arguments(arguments, parser=None):
 def get_account_stats(account, all_resources=False):
     """Returns stats for an account"""
 
-    with open("stats_config.yaml", "r") as f:
+    with open("stats_config-v1.yaml", "r") as f:
         resources = yaml.safe_load(f)
 
     account = Account(None, account)

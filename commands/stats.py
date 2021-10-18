@@ -64,10 +64,15 @@ def stats(accounts, config, args):
 
     for resource_name in resource_names:
         output_line = resource_name.ljust(20)
+        count = 0
         for account in accounts:
             count = sum(account_stats[account["name"]][resource_name].values())
             output_line += ("\t" + str(count)).ljust(8)
-        print(output_line)
+        if count == 0:
+            if args.show_zero_also:
+                print(output_line)
+        else:
+            print(output_line)
 
     if not args.no_output_image:
         output_image(accounts, account_stats, resource_names, args.output_image)
@@ -85,6 +90,12 @@ def run(arguments):
     parser.add_argument(
         "--no_output_image",
         help="Don't create output image",
+        default=False,
+        action="store_true",
+    )
+    parser.add_argument(
+        "--show_zero_also",
+        help="Show Stats for Zero resources as well",
         default=False,
         action="store_true",
     )
