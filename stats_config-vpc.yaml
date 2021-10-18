@@ -19,9 +19,11 @@
   query: .Addresses|length
   source: ec2-describe-addresses
 
+  verbose: true
 - name: VPN Gateways
   query: .VpnGateways|length
   source: ec2-describe-vpn-gateways
+  verbose: true
 - name: VPN connections
   query: .VpnConnections|length
   source: ec2-describe-vpn-connections
@@ -29,9 +31,11 @@
 - name: VPC Peering Connections
   query: .VpcPeeringConnections|length
   source: ec2-describe-vpc-peering-connections
+  verbose: true
 - name: VPC Endpoints
   query: .VpcEndpoints|length
   source: ec2-describe-vpc-endpoints
+  verbose: true
 - name: VPC Endpoints Connections
   query: .VpcEndpointConnections|length
   source: ec2-describe-vpc-endpoint-connections
@@ -39,9 +43,11 @@
 - name: Availability Zones
   query: .AvailabilityZones|length
   source: ec2-describe-availability-zones
+  verbose: true
 - name: EBS Volumes
   query: .Volumes|length
   source: ec2-describe-volumes
+  verbose: true
 - name: EFS
   query: .FileSystems|length
   source: efs-describe-file-systems
@@ -54,20 +60,27 @@
 - name: EKS Clusters
   query: .clusters|length
   source: eks-list-clusters
+  verbose: true
+
 - name: ECS Clusters
   query: .clusterArns|length
   source: ecs-list-clusters
+  verbose: true
+
 - name: ECS Tasks
   query: .clusterArns|length
   source: ecs-list-tasks
+  verbose: true
 
 - name: Autoscaling groups
   query: .AutoScalingGroups|length
   source: autoscaling-describe-auto-scaling-groups
+  verbose: true
 
 - name: VPCS
   query: .Vpcs|length
   source: ec2-describe-vpcs
+  verbose: true
 - name: Subnets
   query: .Subnets| map(select(.VpcId | contains("VPC_ID"))) |length
   source: ec2-describe-subnets
@@ -92,8 +105,6 @@
 - name: Network ACLs
   query: .NetworkAcls|map(select(.VpcId | contains("VPC_ID"))) |length
   source: ec2-describe-network-acls
-  verbose: true
 - name: Route tables
   query: .RouteTables|map(select(.VpcId | contains("VPC_ID"))) |length
   source: ec2-describe-route-tables
-  verbose: true
