@@ -258,12 +258,19 @@ def parse_arguments(arguments, parser=None):
 
     return (args, accounts, config)
 
-
-def get_account_stats(account, all_resources=False):
+def get_account_stats(account, all_resources=False,vpc_id=None):
     """Returns stats for an account"""
 
-    with open("stats_config-v1.yaml", "r") as f:
-        resources = yaml.safe_load(f)
+    resources = None 
+
+    if vpc_id:
+
+        with open("stats_config-vpc.yaml") as f:
+            newText=f.read().replace('VPC_ID', vpc_id)
+            resources = yaml.safe_load(newText)
+    else:
+        with open("stats_config-v1.yaml", "r") as f:
+            resources = yaml.safe_load(f)
 
     account = Account(None, account)
     log_debug(

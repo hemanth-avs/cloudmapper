@@ -1,0 +1,99 @@
+- name: Route53 domains
+  query: .Domains|length
+  source: route53domains-list-domains
+  verbose: true
+- name: Route53 hosted zones
+  query: .HostedZones|length
+  source: route53-list-hosted-zones
+  verbose: true
+- name: CloudFormation stacks
+  query: .Stacks|length
+  source: cloudformation-describe-stacks
+  verbose: true
+- name: DirectConnects
+  query: .connections|length
+  source: directconnect-describe-connections
+  verbose: true
+
+- name: Elastic IP Addresses
+  query: .Addresses|length
+  source: ec2-describe-addresses
+
+- name: VPN Gateways
+  query: .VpnGateways|length
+  source: ec2-describe-vpn-gateways
+- name: VPN connections
+  query: .VpnConnections|length
+  source: ec2-describe-vpn-connections
+  verbose: true
+- name: VPC Peering Connections
+  query: .VpcPeeringConnections|length
+  source: ec2-describe-vpc-peering-connections
+- name: VPC Endpoints
+  query: .VpcEndpoints|length
+  source: ec2-describe-vpc-endpoints
+- name: VPC Endpoints Connections
+  query: .VpcEndpointConnections|length
+  source: ec2-describe-vpc-endpoint-connections
+  verbose: true
+- name: Availability Zones
+  query: .AvailabilityZones|length
+  source: ec2-describe-availability-zones
+- name: EBS Volumes
+  query: .Volumes|length
+  source: ec2-describe-volumes
+- name: EFS
+  query: .FileSystems|length
+  source: efs-describe-file-systems
+  verbose: true
+- name: ECR repositories
+  query: .repositories|length
+  source: ecr-describe-repositories
+  verbose: true
+
+- name: EKS Clusters
+  query: .clusters|length
+  source: eks-list-clusters
+- name: ECS Clusters
+  query: .clusterArns|length
+  source: ecs-list-clusters
+- name: ECS Tasks
+  query: .clusterArns|length
+  source: ecs-list-tasks
+
+- name: Autoscaling groups
+  query: .AutoScalingGroups|length
+  source: autoscaling-describe-auto-scaling-groups
+
+- name: VPCS
+  query: .Vpcs|length
+  source: ec2-describe-vpcs
+- name: Subnets
+  query: .Subnets| map(select(.VpcId | contains("VPC_ID"))) |length
+  source: ec2-describe-subnets
+- name: EC2 instances
+  query: '[.Reservations[]?.Instances[]?| select(.VpcId | contains("VPC_ID")) | select(.State.Name == "running")]|length'
+  source: ec2-describe-instances
+- name: ELBs
+  query: .LoadBalancerDescriptions | map(select(.VPCId | contains("VPC_ID"))) | length
+  source: elb-describe-load-balancers
+- name: ELBv2s
+  query: .LoadBalancers | map(select(.VpcId | contains("VPC_ID"))) | length
+  source: elbv2-describe-load-balancers
+- name: NAT Gateway
+  query: .NatGateways|map(select(.VpcId | contains("VPC_ID"))) |length
+  source: ec2-describe-nat-gateways
+- name: Network Interfaces
+  query: .NetworkInterfaces|map(select(.VpcId | contains("VPC_ID"))) |length
+  source: ec2-describe-network-interfaces
+- name: Security Groups
+  query: .SecurityGroups|map(select(.VpcId | contains("VPC_ID"))) |length
+  source: ec2-describe-security-groups
+- name: Network ACLs
+  query: .NetworkAcls|map(select(.VpcId | contains("VPC_ID"))) |length
+  source: ec2-describe-network-acls
+  verbose: true
+- name: Route tables
+  query: .RouteTables|map(select(.VpcId | contains("VPC_ID"))) |length
+  source: ec2-describe-route-tables
+  verbose: true

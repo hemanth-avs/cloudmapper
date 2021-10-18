@@ -55,7 +55,7 @@ def stats(accounts, config, args):
     account_stats = {}
     for account in accounts:
         account_stats[account["name"]] = get_account_stats(
-            account, args.stats_all_resources
+            account, args.stats_all_resources, args.vpc_id
         )
         resource_names = account_stats[account["name"]]["keys"]
 
@@ -106,7 +106,12 @@ def run(arguments):
         default=False,
         dest="stats_all_resources",
     )
-
+    parser.add_argument(
+        "--vpc_id",
+        help="VPC ID",
+        default=None,
+        type=str,
+    )
     args, accounts, config = parse_arguments(arguments, parser)
 
     stats(accounts, config, args)
